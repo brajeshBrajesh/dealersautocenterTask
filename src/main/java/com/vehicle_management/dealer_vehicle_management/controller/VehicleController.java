@@ -40,10 +40,10 @@ public class VehicleController {
         return ResponseEntity.ok(vehicleService.registerVehicle(vehicleRequestDTO));
 
     }
-//    @PatchMapping("/update/{dealerId}")
-//    public ResponseEntity<DealerResponseDTO> update(@PathVariable Long dealerId , @RequestBody DealerRequestDTO dealerRequestDTO){
-//        return ResponseEntity.ok(vehicleService.updateDealer(dealerId,dealerRequestDTO));
-//    }
+    @PatchMapping("/update/{vehicleId}")
+    public ResponseEntity<VehicleResponseDTO> update(@PathVariable Long vehicleId , @RequestBody VehicleRequestDTO vehicleRequestDTO){
+        return ResponseEntity.ok(vehicleService.updateVehicle(vehicleId,vehicleRequestDTO));
+    }
     @GetMapping("/premium")
     public ResponseEntity<List<Vehicle>> getPremiumDealerVehicles() {
         List<Vehicle> vehicles = vehicleService.getVehiclesOfPremiumDealers();

@@ -72,33 +72,45 @@ public class VehicleService {
         return vehicleRepository.findVehiclesOfPremiumDealers();
     }
 //
-//    public DealerResponseDTO updateDealer(Long dealerId, DealerRequestDTO dealerRequestDTO) {
-//        Dealer dealer = dealerRepository.findById(dealerId)
-//                .orElseThrow(() -> new RuntimeException("Dealer not found with ID: " + dealerId));
-//
-//        // Update only non-null fields
-//        if (dealerRequestDTO.getName() != null && !dealerRequestDTO.getName().isBlank()) {
-//            dealer.setName(dealerRequestDTO.getName());
-//        }
-//        if (dealerRequestDTO.getEmail() != null && !dealerRequestDTO.getEmail().isBlank()) {
-//
+    public VehicleResponseDTO updateVehicle(Long vehicleId, VehicleRequestDTO vehicleRequestDTO) {
+        Vehicle vehicle = vehicleRepository.findById(vehicleId)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found with ID: " + vehicleId));
+
+        // Update only non-null fields price,dealerId,status
+        if (vehicleRequestDTO.getModel() != null && !vehicleRequestDTO.getModel().isBlank()) {
+            vehicle.setModel(vehicleRequestDTO.getModel());
+        }
+        if (vehicleRequestDTO.getPrice() != null) {
+
+                vehicle.setPrice(vehicleRequestDTO.getPrice());
 //            if (dealerRepository.existsByEmail(dealerRequestDTO.getEmail()) && !dealerRequestDTO.getEmail().equals(dealer.getEmail())) {
 //                throw new RuntimeException("Dealer already exists with email: " + dealerRequestDTO.getEmail());
 //            }
 //            dealer.setEmail(dealerRequestDTO.getEmail());
-//        }
-//        if (dealerRequestDTO.getSubsType() != null) {
-//            dealer.setSubsType(dealerRequestDTO.getSubsType());
-//        }
-//
-//        // save updated dealer
-//        dealerRepository.save(dealer);
-//
-//        return DealerResponseDTO.builder()
-//                .message("Dealer updated successfully")
-//                .name(dealer.getName())
-//                .email(dealer.getEmail())
-//                .subsType(dealer.getSubsType())
-//                .build();
-//    }
+        }
+        if(vehicleRequestDTO.getDealerId()!=null){
+//            if(!dealerRepository.existsById(vehicleRequestDTO.getDealerId())){
+//                throw  new RuntimeException(("Dealer with dealerId = "+vehicleRequestDTO.getDealerId()+" does not exist!"));
+//            }
+            Dealer dealer = dealerRepository.findById(vehicleRequestDTO.getDealerId())
+                    .orElseThrow(() -> new RuntimeException("Dealer with dealerId = "+vehicleRequestDTO.getDealerId()+" does not exist!"));
+
+            vehicle.setDealer(dealer);
+        }
+        if (vehicleRequestDTO.getStatus() != null) {
+            vehicle.setStatus(vehicleRequestDTO.getStatus());
+        }
+
+        // save updated dealer
+        vehicleRepository.save(vehicle);
+
+
+        return VehicleResponseDTO.builder()
+                .message("Vehicle updated successfully")
+                .vehicleId(vehicle.getId())
+                .model(vehicle.getModel())
+                .price(vehicle.getPrice())
+                .status(vehicle.getStatus())
+                .build();
+    }
 }

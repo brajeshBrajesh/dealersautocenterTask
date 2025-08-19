@@ -19,9 +19,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @Table(name = "vehicles")
 public class Vehicle {
-    public enum VehicleStatus{
-        AVAILABLE,SOLD
+    public enum VehicleStatus {
+        AVAILABLE, SOLD
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
