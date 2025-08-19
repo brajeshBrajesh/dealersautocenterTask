@@ -19,7 +19,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers( "/v3/api-docs/**",
+                .requestMatchers( "/api-docs/**",
+                        "/api-docs",           // 👈 required for Swagger spec loading
+
                         "/swagger-ui.html",
                         "/swagger-ui/**",
                         "/authenticate").permitAll()  // allow this endpoint without auth
