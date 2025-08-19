@@ -57,7 +57,7 @@ public class PaymentService {
                 .dealerId(paymentRequestDTO.getDealerId())
                 .amount(saved.getAmount())
                 .paymentMethod(saved.getPaymentMethod())
-                .paymentStatus(PaymentStatus.SUCCCESS)
+                .paymentStatus(PaymentStatus.PENDING)
                 .localDateTime(saved.getDateTime())
                 .build();
 
